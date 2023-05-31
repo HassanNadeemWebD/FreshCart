@@ -1,13 +1,13 @@
-<?php
+<?php include 'header.php';
+// $query = "SELECT * FROM `categories`";
+$query = "SELECT `icon`, 
+`categories`.`name`  ,`categories`.`status`, count(`categories`.`name`) as `productCount`
+FROM `products` INNER JOIN `categories` ON `products`.`catid` = `categories`.`id` GROUP by `categories`.`name`";
 
-include 'header.php';
-$query = "SELECT * FROM `category`";
 $res = mysqli_query($conn, $query);
 
 
-
 ?>
-
 
 
 <!-- main -->
@@ -82,7 +82,6 @@ $res = mysqli_query($conn, $query);
                 </thead>
                 <tbody>
                   <?php while ($row = mysqli_fetch_assoc($res)) { ?>
-
                     <tr>
 
                       <td>
@@ -94,32 +93,21 @@ $res = mysqli_query($conn, $query);
                         </div>
                       </td>
                       <td>
-                        <a href="#!"> <img src="../assets/images/icons/<?php echo $row['icon'] ?>" alt=""
-                            class="icon-shape icon-sm"></a>
+                        <a href="#!"> <img src="../assets/images/icons/<?php echo $row['icon'] ?>" alt="" class="icon-shape icon-sm"></a>
                       </td>
-                      <td><a href="#" class="text-reset">
-                          <?php echo $row['name'] ?>
-                        </a></td>
-                      <td>0</td>
+                      <td><a href="#" class="text-reset"><?php echo $row['name'] ?></a></td>
+                      <td><?php echo $row['productCount'] ?></td>
 
                       <td>
                         <?php if ($row['status'] == '1') {
-                          echo "     <span class='badge bg-light-primary text-dark-primary'>
-                  Published
-                
-                            </span>";
+                          echo "  <span class='badge bg-light-primary text-dark-primary'>Published</span>";
+                        }else{
+
+                          echo "  <span class='badge bg-light-danger text-dark-danger'>Unpublished</span>";
 
 
-
-                        } else {
-                          echo "     <span class='badge bg-light-danger text-dark-danger'>
-                            Unpublished
-                          
-                                      </span>";
-
-                        }
-                        ?>
-
+                        } ?>
+                        <!-- <span class="badge bg-light-danger text-dark-danger"><?php echo $row['status'] ?></span> -->
                       </td>
 
                       <td>
@@ -136,6 +124,7 @@ $res = mysqli_query($conn, $query);
                       </td>
                     </tr>
                   <?php } ?>
+
                 </tbody>
               </table>
 

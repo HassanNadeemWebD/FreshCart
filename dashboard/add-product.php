@@ -1,13 +1,17 @@
 <?php include 'header.php';
 
-$categories = "SELECT * FROM `category` ORDER BY `name`";
+$categories = "SELECT * FROM `categories`";
+$res = mysqli_query($conn,  $categories);
 
-$res = mysqli_query($conn , $categories);
+
 
 
 
 
 ?>
+
+
+
 
 
 <!-- main -->
@@ -40,8 +44,9 @@ $res = mysqli_query($conn , $categories);
         </div>
         <!-- row -->
         <div class="row">
-            <form action="add-product.php" method="post" enctype="multipart/form-data">
-                <div class="col-lg-8 col-12">
+
+            <div class="col-lg-8 col-12">
+                <form action="add-product.php" method="post" enctype="multipart/form-data">
                     <!-- card -->
                     <div class="card mb-6 card-lg">
                         <!-- card body -->
@@ -51,45 +56,40 @@ $res = mysqli_query($conn , $categories);
                                 <!-- input -->
                                 <div class="mb-3 col-lg-6">
                                     <label class="form-label">Title</label>
-                                    <input type="text" class="form-control" placeholder="Product Name" name="name"
-                                        required>
+                                    <input type="text" name="name" class="form-control" placeholder="Product Name" required>
                                 </div>
                                 <!-- input -->
                                 <div class="mb-3 col-lg-6">
                                     <label class="form-label">Product Category</label>
                                     <select class="form-select" name="catID">
                                         <option selected>Product Category</option>
-                                        <?php while($row = mysqli_fetch_assoc($res)){ 
-                                       ?>
-                                            
-                                        <option value="<?php echo $row['categoryid']?>"><?php echo $row['name']?></option>
+                                        <?php while ($row = mysqli_fetch_assoc($res)) {
+                                        ?>
+                                            <option value="<?php echo $row['id'] ?>"><?php echo $row['name'] ?></option>
+
+
 
                                         <?php } ?>
-                             
                                     </select>
                                 </div>
-
                                 <!-- input -->
                                 <!-- <div class="mb-3 col-lg-6">
-                                    <label class="form-label">Units</label>
-                                    <select class="form-select">
-                                        <option selected>Select Units</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                    </select>
+                                    <label class="form-label">Weight</label>
+                                    <input type="text" class="form-control" placeholder="Weight" required>
                                 </div> -->
+                                <!-- input -->
+
                                 <div>
                                     <div class="mb-3 col-lg-12 mt-5">
                                         <!-- heading -->
                                         <h4 class="mb-3 h5">Product Images</h4>
 
                                         <!-- input -->
-
+                                        <!-- <form action="#" class="d-block dropzone border-dashed rounded-2 "> -->
                                         <div class="fallback">
-                                            <input type="file" name="img">
+                                            <input name="img" type="file">
                                         </div>
-
+                                        <!-- </form> -->
                                     </div>
                                 </div>
                                 <!-- input -->
@@ -99,81 +99,75 @@ $res = mysqli_query($conn , $categories);
                                 </div>
                             </div>
                         </div>
+
                     </div>
 
-                </div>
-                <div class="col-lg-4 col-12">
-                    <!-- card -->
-                    <div class="card mb-6 card-lg">
-                        <!-- card body -->
-                        <div class="card-body p-6">
-                            <!-- input -->
-                            <!-- <div class="form-check form-switch mb-4">
-                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchStock"
-                                    checked>
-                                <label class="form-check-label" for="flexSwitchStock">In Stock</label>
-                            </div> -->
-                            <!-- input -->
-                            <div>
-                                <!-- <div class="mb-3">
-                                    <label class="form-label">Product Code</label>
-                                    <input type="text" class="form-control" placeholder="Enter Product Title">
-                                </div> -->
-                                <!-- input -->
-                                <!-- <div class="mb-3">
-                                    <label class="form-label">Product SKU</label>
-                                    <input type="text" class="form-control" placeholder="Enter Product Title">
-                                </div> -->
-                                <!-- input -->
-                                <div class="mb-3">
-                                    <label class="form-label" id="productSKU">Status</label><br>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="status" id="inlineRadio1"
-                                            value="1" checked>
-                                        <label class="form-check-label" for="inlineRadio1">Active</label>
-                                    </div>
-                                    <!-- input -->
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="status" id="inlineRadio2"
-                                            value="0">
-                                        <label class="form-check-label" for="inlineRadio2">Disabled</label>
-                                    </div>
-                                    <!-- input -->
-
-                                </div>
-
-                            </div>
+            </div>
+            <div class="col-lg-4 col-12">
+                <!-- card -->
+                <div class="card mb-6 card-lg">
+                    <!-- card body -->
+                    <div class="card-body p-6">
+                        <!-- input -->
+                        <div class="form-check form-switch mb-4">
+                            <input class="form-check-input" type="checkbox" name="stock" role="switch" id="flexSwitchStock" checked>
+                            <label class="form-check-label" for="flexSwitchStock">In Stock</label>
                         </div>
-                    </div>
-                    <!-- card -->
-                    <div class="card mb-6 card-lg">
-                        <!-- card body -->
-                        <div class="card-body p-6">
-                            <h4 class="mb-4 h5">Product Price</h4>
+                        <!-- input -->
+                        <div>
+
+                            <!-- input -->
+
                             <!-- input -->
                             <div class="mb-3">
-                                <label class="form-label">Regular Price</label>
-                                <input type="text" class="form-control" name="price" placeholder="$0.00">
+                                <label class="form-label" id="productSKU">Status</label><br>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="status" id="inlineRadio1" value="1" checked>
+                                    <label class="form-check-label" for="inlineRadio1">Active</label>
+                                </div>
+                                <!-- input -->
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="status" id="inlineRadio2" value="0">
+                                    <label class="form-check-label" for="inlineRadio2">Disabled</label>
+                                </div>
+                                <!-- input -->
+
                             </div>
-                            <!-- input -->
-                            <!-- <div class="mb-3">
-                                <label class="form-label">Sale Price</label>
-                                <input type="text" class="form-control" placeholder="$0.00">
-                            </div> -->
 
                         </div>
                     </div>
-                    <!-- card -->
+                </div>
+                <!-- card -->
+                <div class="card mb-6 card-lg">
+                    <!-- card body -->
+                    <div class="card-body p-6">
+                        <h4 class="mb-4 h5">Product Price</h4>
+                        <!-- input -->
+                        <div class="mb-3">
+                            <label class="form-label">Regular Price</label>
+                            <input type="text" name="price" class="form-control" placeholder="$0.00">
+                        </div>
+                        <!-- input -->
+                        <!-- <div class="mb-3">
+                            <label class="form-label">Sale Price</label>
+                            <input type="text" class="form-control" placeholder="$0.00">
+                        </div> -->
 
-                    <!-- button -->
-                    <div class="d-grid">
-                        <button type="submit" name="addProduct" class="btn btn-primary">
-                            Create Product
-                        </button>
                     </div>
                 </div>
-            </form>
+                <!-- card -->
+
+                <!-- button -->
+                <div class="d-grid">
+                    <button type="submit" name="addProduct" class="btn btn-primary">
+                        Create Product
+                    </button>
+                </div>
+                </form>
+            </div>
         </div>
+
+    </div>
     </div>
 </main>
 
@@ -198,57 +192,59 @@ $res = mysqli_query($conn , $categories);
 
 </html>
 
-
-
 <?php
+
 if (isset($_POST['addProduct'])) {
-include 'config.php';
+
+
     $name = $_POST['name'];
-    $catID = $_POST['catID'];
     $desc = $_POST['description'];
     $status = $_POST['status'];
     $price = $_POST['price'];
+    $catID = $_POST['catID'];
+
     $fileName = $_FILES['img']['name'];
     $tmpName = $_FILES['img']['tmp_name'];
-    $fileType = $_FILES['img']['type'];
+    $type = $_FILES['img']['type'];
+    if (isset($_POST['stock'])) {
 
-    // print_r($_FILES['img']);
-    if ($fileType == "image/png" || $fileType == 'image/jpg' || $fileType == 'image/jpeg') {
-
-
-
-
-        if (move_uploaded_file($tmpName, "../assets/images/products/" . $fileName)) {
-
-            $query ="INSERT INTO `products` 
-            (`catID`, `productName`, `status`, `description`, `price`, `createdAt`, `img`) VALUES
-             ('$catID', '$name', '$status', '$desc', '$price', current_timestamp(), '$fileName')";
-            
-            $res = mysqli_query($conn, $query);
-            if ($res) {
-                // echo "<script> alert('Image uploaded') </script>";
-                echo "<script> alert('Product Added !') </script>";
-                echo "<script>window.location.href = 'products.php'</script>";
-            }
-
-        }
-
-
+        $stock = 1;
     } else {
 
-        echo "<script> alert('Image is Not Uploaded , Please use correct file format') </script>";
-
-        // header('location: form.php');
-        // echo "<script>window.location.href = 'form.php'</script>";
-
+        $stock = 0;
     }
 
+    // print_r($_POST);
+
+    // echo $type;
+
+    if ($type == 'image/jpg' || $type == 'image/png' || $type == 'image/jpeg') {
+
+        if (move_uploaded_file($tmpName, '../assets/images/products/' . $fileName)) {
 
 
+            $product = "INSERT INTO `products` 
+            ( `name`, `description`, `catid`, `status`, `price`, `createdAt`, `img`, `inStock`) 
+            VALUES ( '$name', '$desc', '$catID', '$status', '$price', current_timestamp(), '$fileName', '$stock')";
 
+            $res =  mysqli_query($conn, $product);
+            if ($res) {
+
+                echo "<script> alert('Product Added') </script>";
+                echo "<script> window.location.href = 'products.php' </script>";
+            }
+        }
+    } else {
+        echo "<script> alert('Please use supported file format, JPG , JPEG or PNG') </script>";
+        // echo "<script> window.location.href = 'form.php' </script>";
+
+
+        // header('location: form.php');
+
+    }
 }
 
-// print_r($_POST);
+
 
 
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 29, 2023 at 07:24 AM
+-- Generation Time: May 31, 2023 at 08:06 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -29,44 +29,45 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admin` (
   `id` int(11) NOT NULL,
-  `adminname` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL,
+  `picture` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`id`, `adminname`, `email`, `password`) VALUES
-(1, 'test', 'test@gmail.com', 'test123'),
-(3, 'hassan', 'hassan@gmail.com ', '1234');
+INSERT INTO `admin` (`id`, `name`, `email`, `password`, `picture`) VALUES
+(1, 'Hassan', 'hassan@gmail.com', 'hassan123', 'picture.jpg');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `category`
+-- Table structure for table `categories`
 --
 
-CREATE TABLE `category` (
-  `categoryid` int(11) NOT NULL,
+CREATE TABLE `categories` (
+  `id` int(11) NOT NULL,
   `icon` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `status` int(11) NOT NULL,
-  `description` varchar(255) NOT NULL,
-  `date` date NOT NULL
+  `description` text NOT NULL,
+  `date` date NOT NULL,
+  `status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `category`
+-- Dumping data for table `categories`
 --
 
-INSERT INTO `category` (`categoryid`, `icon`, `name`, `status`, `description`, `date`) VALUES
-(1, 'dairy.svg', 'Bakery', 1, 'asass', '2023-05-24'),
-(3, 'snacks.svg', 'Snacks', 1, 'sanks', '2023-05-24'),
-(4, 'clock.svg', 'clock', 0, 'clock', '2023-05-24'),
-(5, 'gift.svg', 'Gift', 1, 'Gift category', '2023-05-29'),
-(6, 'fish.svg', 'Fish', 1, '', '2023-05-30');
+INSERT INTO `categories` (`id`, `icon`, `name`, `description`, `date`, `status`) VALUES
+(5, 'bakery.svg', 'bakery', 'bakery products', '2023-05-29', 1),
+(6, 'petfoods.svg', 'Pet Foods ', 'Pet Products', '2023-05-29', 1),
+(7, 'dairy.svg', 'Dairy', 'Dairy Products', '2023-05-30', 0),
+(8, 'snacks.svg', 'Snacks ', 'Snacks Products', '2023-05-31', 1),
+(9, 'fruit.svg', 'Fruits & Vegetables', 'Fruits & Vegetables', '2023-05-31', 1),
+(10, 'toiletries.svg', 'Toiletries', '', '2023-05-31', 1);
 
 -- --------------------------------------------------------
 
@@ -75,22 +76,35 @@ INSERT INTO `category` (`categoryid`, `icon`, `name`, `status`, `description`, `
 --
 
 CREATE TABLE `products` (
-  `productID` int(11) NOT NULL,
-  `catID` int(11) NOT NULL,
-  `productName` varchar(255) NOT NULL,
-  `status` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
   `description` text NOT NULL,
+  `catid` int(11) NOT NULL,
+  `status` int(11) NOT NULL,
   `price` int(11) NOT NULL,
   `createdAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `img` varchar(255) NOT NULL
+  `img` varchar(255) NOT NULL,
+  `inStock` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`productID`, `catID`, `productName`, `status`, `description`, `price`, `createdAt`, `img`) VALUES
-(1, 3, '5 Star Chocolate', 1, 'Chocolate', 50, '2023-05-29 05:22:37', 'product-img-3.jpg');
+INSERT INTO `products` (`id`, `name`, `description`, `catid`, `status`, `price`, `createdAt`, `img`, `inStock`) VALUES
+(1, '5 Star Chocolate', '5 Star Chocolate', 8, 1, 22, '2023-05-29 07:17:29', 'product-img-3.jpg', 1),
+(2, 'Butter', 'Butter', 7, 1, 22, '2023-05-29 07:17:29', 'product-img-10.jpg', 1),
+(3, 'Cat Feed', 'Pet Food', 6, 1, 50, '2023-05-29 07:09:59', 'product-img-9.jpg', 0),
+(4, 'Lays', 'Snacks', 8, 1, 50, '2023-05-29 07:17:29', 'product-img-4.jpg', 1),
+(5, 'Pop Corn', 'Snacks', 8, 1, 50, '2023-05-29 07:16:32', 'product-img-5.jpg', 1),
+(6, 'Biscuits', 'Biscuits', 5, 0, 20, '2023-05-29 08:02:49', 'product-img-2.jpg', 0),
+(7, 'Chocolate', 'Chocolate', 8, 1, 10, '2023-05-29 08:03:26', 'product-img-9.jpg', 0),
+(8, 'Corn Flakes', 'Corn Flakes', 8, 1, 55, '2023-05-29 08:04:24', 'product-img-8.jpg', 0),
+(9, 'Banana ', 'Pet Food', 6, 0, 20, '2023-05-31 04:21:10', 'product-img-18.jpg', 1),
+(10, 'Pineapple', 'Pineapple', 9, 1, 10, '2023-05-31 05:01:56', 'product-img-16.jpg', 1),
+(11, 'Kiwi', 'Kiwi Fruit', 9, 1, 40, '2023-05-31 05:05:44', 'product-img-17.jpg', 1),
+(12, 'Apple ', 'Apple ', 9, 1, 0, '2023-05-31 05:06:13', 'product-img-15.jpg', 1),
+(13, 'Amul Butter', 'Amul Butter', 5, 1, 15, '2023-05-31 05:16:46', 'product-img-10.jpg', 1);
 
 --
 -- Indexes for dumped tables
@@ -103,17 +117,17 @@ ALTER TABLE `admin`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `category`
+-- Indexes for table `categories`
 --
-ALTER TABLE `category`
-  ADD PRIMARY KEY (`categoryid`);
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `products`
 --
 ALTER TABLE `products`
-  ADD PRIMARY KEY (`productID`),
-  ADD KEY `catID` (`catID`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `catid` (`catid`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -123,19 +137,19 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `category`
+-- AUTO_INCREMENT for table `categories`
 --
-ALTER TABLE `category`
-  MODIFY `categoryid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+ALTER TABLE `categories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `productID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Constraints for dumped tables
@@ -145,7 +159,7 @@ ALTER TABLE `products`
 -- Constraints for table `products`
 --
 ALTER TABLE `products`
-  ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`catID`) REFERENCES `category` (`categoryid`);
+  ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`catid`) REFERENCES `categories` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
