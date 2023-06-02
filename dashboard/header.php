@@ -1,6 +1,6 @@
-<?php session_start();  
+<?php session_start();
 include 'config.php';
-if(!isset($_SESSION['admin'])){
+if (!isset($_SESSION['admin'])) {
 
 
     echo "<script> window.location.href = 'adminlogin.php' </script>";
@@ -172,7 +172,7 @@ if(!isset($_SESSION['admin'])){
         </li>
         <li class="dropdown ms-4">
             <a href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="adminimg/<?php echo $_SESSION['pic']?>" alt="" class="avatar avatar-md rounded-circle">
+                <img src="adminimg/<?php echo $_SESSION['pic'] ?>" alt="" class="avatar avatar-md rounded-circle">
             </a>
 
             <div class="dropdown-menu dropdown-menu-end p-0">
@@ -180,8 +180,8 @@ if(!isset($_SESSION['admin'])){
 
 
                     <div class="lh-1 px-5 py-4 border-bottom">
-                        <h5 class="mb-1 h6"><?php echo $_SESSION['admin']?></h5>
-                        <small><?php echo $_SESSION['email']?></small>
+                        <h5 class="mb-1 h6"><?php echo $_SESSION['admin'] ?></h5>
+                        <small><?php echo $_SESSION['email'] ?></small>
                     </div>
 
 

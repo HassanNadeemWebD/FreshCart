@@ -13,19 +13,27 @@ if (isset($_POST['login'])) {
     $password = $_POST['password'];
     $query = "SELECT * FROM `ADMIN` WHERE `email` = '$email' AND `password` = '$password' ";
     $res = mysqli_query($conn, $query);
-    // echo mysqli_num_rows($res);
+    echo mysqli_num_rows($res);
 
     // print_r($res);
     if (mysqli_num_rows($res) == 1) {
 
-        $admin =  mysqli_fetch_assoc($res);
-        $adminEmail =  $admin['email'];
-        $adminName =  $admin['name'];
-        $adminPic =  $admin['picture'];
+        $admin = mysqli_fetch_assoc($res);
+        $adminEmail = $admin['email'];
+        $adminName = $admin['name'];
+        $adminPic = $admin['picture'];
         $_SESSION['admin'] = $adminName;
         $_SESSION['email'] = $adminEmail;
         $_SESSION['pic'] = $adminPic;
+        if (isset($_POST['rememberMe'])) {
+            setcookie('email', $adminEmail, time() + 3600, '/');
+            setcookie('password', $password, time() + 3600, '/');
+        }else{
 
+            setcookie('email', $adminEmail, time() - 3600, '/');
+            setcookie('password', $password, time() - 3600, '/');
+
+        }
 
         echo "<script> alert('login success') </script>";
         echo "<script> window.location.href = 'index.php' </script>";
@@ -47,7 +55,8 @@ if (isset($_POST['login'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <title>Document</title>
 </head>
 
@@ -65,18 +74,29 @@ if (isset($_POST['login'])) {
                                     <p class="text-white-50 mb-5">Please enter your login and password!</p>
 
                                     <div class="form-outline form-white mb-4">
-                                        <input type="email" id="typeEmailX" class="form-control form-control-lg" name="email" value="<?php echo @$_POST['email'] ?>" />
+                                        <input type="email" id="typeEmailX" class="form-control form-control-lg"
+                                            name="email" value="<?php echo @$_COOKIE['email'] ?>" />
                                         <label class="form-label" for="typeEmailX">Email</label>
                                     </div>
 
                                     <div class="form-outline form-white mb-4">
-                                        <input type="password" id="typePasswordX" class="form-control form-control-lg" name="password" />
+                                        <input type="password" id="typePasswordX" class="form-control form-control-lg"
+                                            name="password" value="<?php echo @$_COOKIE['password'] ?>" />
                                         <label class="form-label" for="typePasswordX">Password</label>
                                     </div>
+                                    <input type="checkbox" id="typePasswordX" name="rememberMe" <?php if (isset($_COOKIE['email'])) {
 
-                                    <p class="small mb-5 pb-lg-2"><a class="text-white-50" href="#!">Forgot password?</a></p>
+                                        echo "checked";
 
-                                    <button class="btn btn-outline-light btn-lg px-5" name="login" type="submit">Login</button>
+                                    } ?> />
+                                    <label class="form-label" for="typePasswordX">Remember me</label>
+
+
+                                    <p class="small mb-5 pb-lg-2"><a class="text-white-50" href="#!">Forgot
+                                            password?</a></p>
+
+                                    <button class="btn btn-outline-light btn-lg px-5" name="login"
+                                        type="submit">Login</button>
 
                                 </form>
 
@@ -92,7 +112,9 @@ if (isset($_POST['login'])) {
         </div>
 
     </section>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

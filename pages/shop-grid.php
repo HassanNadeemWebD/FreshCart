@@ -1123,50 +1123,54 @@
             ?>
 
             <!-- nav -->
-            <?php while ($row = mysqli_fetch_assoc($res)) {
+            <ul class="nav nav-category" id="categoryCollapseMenu">
+              
+            <?php
+    
+         
+            while ($row = mysqli_fetch_assoc($res)) {
 
               $categoryID = $row['id'];
 
               ?>
-                <ul class="nav nav-category" id="<?php echo $categoryID?>">
-                  <li class="nav-item border-bottom w-100 collapsed" data-bs-toggle="collapse"
-                    data-bs-target="#categoryFlushOne" aria-expanded="false" aria-controls="categoryFlushOne"><a href="#"
-                      class="nav-link"><?php echo $row['categoryName'] ?> <i class="feather-icon icon-chevron-right"></i></a>
-                    <!-- accordion collapse -->
-                    <div id="categoryFlushOne" class="accordion-collapse collapse"
-                      data-bs-parent="#<?php echo $categoryID?>">
-                      <div>
-                        <!-- nav -->
+                    <li class="nav-item border-bottom w-100 collapsed" data-bs-toggle="collapse"
+                      data-bs-target="#categoryFlush<?php echo $categoryID ?>" aria-expanded="false" aria-controls="categoryFlush<?php echo $categoryID ?>"><a href="#"
+                        class="nav-link"><?php echo $row['categoryName'] ?> <i class="feather-icon icon-chevron-right"></i></a>
+                      <!-- accordion collapse -->
+                      <div id="categoryFlush<?php echo $categoryID ?>" class="accordion-collapse collapse"
+                        data-bs-parent="#categoryCollapseMenu">
+                        <div>
+                          <!-- nav -->
 
-                        <ul class="nav flex-column ms-3">
-                          <?php $products = "SELECT `name` FROM `PRODUCTS` WHERE `catid` =  '$categoryID' ";
-                          $productsRes = mysqli_query($conn, $products);
+                          <ul class="nav flex-column ms-3">
+                            <?php $products = "SELECT `name` FROM `PRODUCTS` WHERE `catid` =  '$categoryID' ";
+                            $productsRes = mysqli_query($conn, $products);
 
-                          // print_r($productsRes);
-                          while ($productRow = mysqli_fetch_assoc($productsRes)) {
-                            // print_r(mysqli_fetch_assoc($productsRes));
-                        
+                            // print_r($productsRes);
+                            while ($productRow = mysqli_fetch_assoc($productsRes)) {
+                              // print_r(mysqli_fetch_assoc($productsRes));
+                          
 
-                            ?>
-                            <!-- nav item -->
-                            <li class="nav-item"><a href="#!" class="nav-link"><?php echo $productRow['name'] ?></a></li>
-                            <!-- nav item -->
+                              ?>
+                                <!-- nav item -->
+                                <li class="nav-item"><a href="#!" class="nav-link"><?php echo $productRow['name'] ?></a></li>
+                                <!-- nav item -->
                  
-                          <?php } ?>
-                        </ul>
+                            <?php } ?>
+                          </ul>
 
 
 
+                        </div>
                       </div>
-                    </div>
 
-                  </li>
-                  <!-- nav item -->
+                    </li>
+                    <!-- nav item -->
            
 
-                </ul>
-
-            <?php } ?>
+                    
+                    <?php } ?>
+                  </ul>
           </div>
 
           <div class="mb-8">
