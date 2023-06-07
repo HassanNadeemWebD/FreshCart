@@ -13,7 +13,7 @@ if (isset($_POST['login'])) {
     $password = $_POST['password'];
     $query = "SELECT * FROM `ADMIN` WHERE `email` = '$email' AND `password` = '$password' ";
     $res = mysqli_query($conn, $query);
-    echo mysqli_num_rows($res);
+    // echo mysqli_num_rows($res);
 
     // print_r($res);
     if (mysqli_num_rows($res) == 1) {
